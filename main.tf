@@ -77,7 +77,7 @@ resource "aws_security_group" "allow_web" {
 }
 #7 Create Launch config for auto scaling group 
 resource "aws_launch_configuration" "web" {
-  name = "web-"
+  #no name
   image_id = "ami-09e67e426f25ce0d7" 
   instance_type = "t2.micro"
   security_groups = [aws_security_group.allow_web.id]
@@ -87,6 +87,7 @@ resource "aws_launch_configuration" "web" {
               sudo apt-get update -y 
               sudo apt-get install nginx -y
               sudo systemctl start nginx
+              echo "Hello Test"
               EOF
   #Launch Configurations cannot be updated after creation with the Amazon Web Service API
   lifecycle { 
