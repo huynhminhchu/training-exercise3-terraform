@@ -87,7 +87,6 @@ resource "aws_launch_configuration" "web" {
               sudo apt-get update -y 
               sudo apt-get install nginx -y
               sudo systemctl start nginx
-              echo "Hello Test"
               EOF
   #Launch Configurations cannot be updated after creation with the Amazon Web Service API
   lifecycle { 
@@ -97,10 +96,10 @@ resource "aws_launch_configuration" "web" {
 #8 Declare auto scaling group 
 resource "aws_autoscaling_group" "web" {
   name = "web-asg"
-  min_size = 1
+  min_size = 1 # always have a certain number of instances running at all times
   desired_capacity = 1 
   max_size = 1
-  health_check_type = "EC2"
+  health_check_type = "EC2" #ELB check or EC2 check
   launch_configuration = aws_launch_configuration.web.name
   vpc_zone_identifier = [
     aws_subnet.public_us_east_1a.id,
